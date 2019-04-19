@@ -121,6 +121,7 @@ public class SyncRequestProcessor extends ZooKeeperCriticalThread implements Req
             // we do this in an attempt to ensure that not all of the servers
             // in the ensemble take a snapshot at the same time
             setRandRoll(r.nextInt(snapCount/2));
+            //这里在处理客户端的请求
             while (true) {
                 Request si = null;
                 if (toFlush.isEmpty()) {
