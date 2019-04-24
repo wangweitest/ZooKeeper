@@ -50,6 +50,7 @@ public class ZooKeeperServerMain2 {
      * @param args the configfile or the port datadir [ticktime]
      */
     public static void main(String[] args) {
+    	
         ZooKeeperServerMain2 main = new ZooKeeperServerMain2();
         try {
             main.initializeAndRun(args);
@@ -116,10 +117,12 @@ public class ZooKeeperServerMain2 {
             zkServer.setTickTime(config.tickTime);
             zkServer.setMinSessionTimeout(config.minSessionTimeout);
             zkServer.setMaxSessionTimeout(config.maxSessionTimeout);
+            //创建ServerCnxnFactory，在createFactory方法中指定了ServerCnxnFactory的类型，未指定时使用的是NIOServerCnxnFactory
+            //这个类型可以通过配置指定，指定方式：https://blog.csdn.net/weibin_6388/article/details/80338321
             cnxnFactory = ServerCnxnFactory.createFactory();
             cnxnFactory.configure(config.getClientPortAddress(),
                     config.getMaxClientCnxns());
-            cnxnFactory.startup(zkServer);
+            cnxnFactory.startup(zkServer);//
             // Watch status of ZooKeeper server. It will do a graceful shutdown
             // if the server is not running or hits an internal error.
             shutdownLatch.await();

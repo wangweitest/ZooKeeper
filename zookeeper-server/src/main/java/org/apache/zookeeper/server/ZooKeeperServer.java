@@ -401,9 +401,11 @@ public class ZooKeeperServer implements SessionExpirer, ServerStats.Provider {
     throws IOException, InterruptedException {
         //check to see if zkDb is not null
         if (zkDb == null) {
+        	//这里会把磁盘中的文件读到zkDb中
             zkDb = new ZKDatabase(this.txnLogFactory);
         }  
         if (!zkDb.isInitialized()) {
+        	//这里会把zkDb保存到内存中
             loadData();
         }
     }
